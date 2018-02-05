@@ -1,0 +1,52 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'maven'
+
+jar {
+	baseName = 'jms-transaction-example'
+	version = '0.0.1-SNAPSHOT'
+}
+
+archivesBaseName = "jms-transaction-example"
+group = 'com.github.jimsp'
+version = '0.0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+dependencies {
+    compile project(':exampleBroker')
+    compile project(':exampleMessaging')
+	compile project(':exampleDatabaseA')
+	compile project(':exampleDatabaseB')
+	compile project(':canonical')
+}
+
+allprojects {
+	apply plugin: 'java'
+	apply plugin: 'eclipse'
+	apply plugin: 'maven'
+
+	sourceCompatibility = 1.8
+	targetCompatibility = 1.8
+
+	compileJava {
+    	options.fork = true
+    	options.incremental = true
+	}
+	
+	repositories {
+		mavenCentral()
+		maven {url "http://central.maven.org/maven2"}
+		maven { url "https://repo.spring.io/snapshot" }
+		maven { url "https://repo.spring.io/milestone" }
+	}
+	
+
+
+    subprojects {
+        group = 'com.github.jimsp'
+        version = '0.0.1-SNAPSHOT'
+    }
+}
+
